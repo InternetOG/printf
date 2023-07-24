@@ -1,74 +1,108 @@
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <unistd.h>
+#include "main.h"
+/**
+ * print_string - Prints a string
+ * @types: List a of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 
-int my_printf(const char *format, ...)
+int _printf(const char *format, ...)
 {
-    int printed_chars = 0;
-    va_list args;
-    va_start(args, format);
+	int printed_chars = 0;
+	int i;
+	va_list args;
+	va_start(args, format);
 
-    while (*format)
-    {
-        if (*format == '%')
-        {
-            format++;
-            switch (*format)
-            {
-                case 'c':
-                    putchar(va_arg(args, int));
-                    printed_chars++;
-                    break;
-                case 's':
-                    printed_chars += printf("%s", va_arg(args, char*));
-                    break;
-                case 'd':
-                    printed_chars += printf("%d", va_arg(args, int));
-                    break;
-                case 'u':
-                    printed_chars += printf("%u", va_arg(args, unsigned int));
-                    break;
-                case 'o':
-                    printed_chars += printf("%o", va_arg(args, unsigned int));
-                    break;
-                case 'x':
-                    printed_chars += printf("%x", va_arg(args, unsigned int));
-                    break;
-                case 'X':
-                    printed_chars += printf("%X", va_arg(args, unsigned int));
-                    break;
-                case 'p':
-                    printed_chars += printf("%p", va_arg(args, void*));
-                    break;
-                case 'f':
-                    printed_chars += printf("%f", va_arg(args, double));
-                    break;
-                case 'e':
-                    printed_chars += printf("%e", va_arg(args, double));
-                    break;
-                case 'E':
-                    printed_chars += printf("%E", va_arg(args, double));
-                    break;
-                case 'g':
-                    printed_chars += printf("%g", va_arg(args, double));
-                    break;
-                case 'G':
-                    printed_chars += printf("%G", va_arg(args, double));
-                    break;
-                default:
-                    putchar(*format);
-                    printed_chars++;
-                    break;
-            }
-        }
-        else
-        {
-            putchar(*format);
-            printed_chars++;
-        }
+		while (*format != '\0')
+		{
+			if (*format == '%')
+			{
+				format++;
+				switch (*format)
+				{case 'c':
+					{
+						int c = va_arg(args, int);
+						_putchar(c);
+						printed_chars++;
+						break;
+					}
+					case 's':
+					{
+						char *str = va_arg(args, char *);
+						for (i = 0; str[i] != '\0'; i++)
+						{
+							_putchar(str[i]);
+							printed_chars++;
+						}
+						break;
+					}
+					case 'd':
+					case 'i':
+					{
+						printf("%d", va_arg(args, int));
+						printed_chars++;
+						break;
+					}
+					case 'p':
+					{
+						printf("%p", va_arg(args, int *));
+						printed_chars++;
+						break;
+					}
+					case 'x':
+					case 'X':
+					{
+						printf("%x", va_arg(args, int *));
+						printed_chars++;
+						break;
+					}
+	
+					case 'u':
+					{
+						printf("%u", va_arg(args, int));
+						printed_chars++;
+						break;
+					}
+					case 'o':
+					{
+						printf("%o", va_arg(args, int));
+						printed_chars++;
+						break;
+					}
+					case 'r':
+					{
 
-        format++;
-    }
-
-    va_end(args);
-    return printed_chars;
+						_putchar('%');
+						_putchar('r');
+						printed_chars++;
+						break;
+					}
+					case '%':
+					{
+						_putchar('%');
+						printed_chars++;
+						break;
+					}
+					default: 
+					{
+						break;
+					}
+				}
+			} else
+			{
+				_putchar(*format);
+				printed_chars++;
+			}
+			format++;
+		}
+	va_end(args);
+	return (printed_chars);
 }
+
