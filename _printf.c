@@ -1,60 +1,74 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include "main.h"
 
-int _printf(const char *format, ...)
+int my_printf(const char *format, ...)
 {
-	int i = 0;
-	va_list vl;
+    int printed_chars = 0;
+    va_list args;
+    va_start(args, format);
 
-	va_start(vl, format);
-	while (format[i] != '\0')
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			switch (format[i])
-			{
-				case 'c':
-					printf("%c", va_arg(vl, int));
-					break;
-				case 's':
-					printf("%s", va_arg(vl, char*));
-					break;
-				case '%':
-					printf("%%");
-					break;
-				case 'd':
-				case 'i':
-					printf("%d", va_arg(vl, int));
-					break;
-				case 'p':
-					printf("%p", va_arg(vl, int *));
-					break;
-				case 'x':
-				case 'X':
-					printf("%x", va_arg(vl, int *));
-					break;
-				case 'u':
-					printf("%u", va_arg(vl, int));
-					break;
-				case 'o':
-					printf("%o", va_arg(vl, int));
-					break;
-				case 'r':
-					printf("%r");
-					break;
-				default:
-					printf("%c", format[i]);
-					break;
-			}
-		}
-		else
-		{
-			printf("%c", format[i]);
-		}
-		i++;
-	}
-	return (i - 1);
-	va_end(vl);
+    while (*format)
+    {
+        if (*format == '%')
+        {
+            format++;
+            switch (*format)
+            {
+                case 'c':
+                    putchar(va_arg(args, int));
+                    printed_chars++;
+                    break;
+                case 's':
+                    printed_chars += printf("%s", va_arg(args, char*));
+                    break;
+                case 'd':
+                    printed_chars += printf("%d", va_arg(args, int));
+                    break;
+                case 'u':
+                    printed_chars += printf("%u", va_arg(args, unsigned int));
+                    break;
+                case 'o':
+                    printed_chars += printf("%o", va_arg(args, unsigned int));
+                    break;
+                case 'x':
+                    printed_chars += printf("%x", va_arg(args, unsigned int));
+                    break;
+                case 'X':
+                    printed_chars += printf("%X", va_arg(args, unsigned int));
+                    break;
+                case 'p':
+                    printed_chars += printf("%p", va_arg(args, void*));
+                    break;
+                case 'f':
+                    printed_chars += printf("%f", va_arg(args, double));
+                    break;
+                case 'e':
+                    printed_chars += printf("%e", va_arg(args, double));
+                    break;
+                case 'E':
+                    printed_chars += printf("%E", va_arg(args, double));
+                    break;
+                case 'g':
+                    printed_chars += printf("%g", va_arg(args, double));
+                    break;
+                case 'G':
+                    printed_chars += printf("%G", va_arg(args, double));
+                    break;
+                default:
+                    putchar(*format);
+                    printed_chars++;
+                    break;
+            }
+        }
+        else
+        {
+            putchar(*format);
+            printed_chars++;
+        }
+
+        format++;
+    }
+
+    va_end(args);
+    return printed_chars;
 }
