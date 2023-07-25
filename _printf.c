@@ -1,9 +1,9 @@
-#include <stdarg.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include "main.h"
 /**
- * _printf - Entry point
- *@format: print char
+ * _printf - Printf function
+ * @format: array of characters
  * Return: Always 0
  */
 int _printf(const char *format, ...)
@@ -51,7 +51,8 @@ int _printf(const char *format, ...)
 					 lp += printf("%%%c", *format);
 					break;
 			}
-		} else 
+		}
+		else
 		{
 			lp += printf("%c", *format);
 		}
