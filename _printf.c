@@ -20,48 +20,38 @@ int _printf(const char *format, ...)
 			switch (*format)
 			{
 				case 'c':
-					printf("%c", va_arg(args, int));
-					lp++;
+					lp += printf("%c", va_arg(args, int));
 					break;
 				case 's':
-					printf("%s", va_arg(args, char *));
-					lp++;
+					lp += printf("%s", va_arg(args, char *));
 					break;
 				case 'd':
 				case 'i':
-					printf("%d", va_arg(args, int));
-					lp++;
+					lp += printf("%d", va_arg(args, int));
 					break;
 				case 'u':
-					printf("%u", va_arg(args, int));
-					lp++;
+					lp += printf("%u", va_arg(args, unsigned int));
 					break;
 				case 'o':
-					printf("%o", va_arg(args, int));
-					lp++;
+					lp += printf("%o", va_arg(args, unsigned int));
 					break;
 				case 'x':
 				case 'X':
-					printf("%x", va_arg(args, int *));
-					lp++;
+					lp += printf("%x", va_arg(args, int *));
 					break;
 				case 'p':
-					printf("%p", va_arg(args, int *));
-					lp++;
+					lp += printf("%p", va_arg(args, void *));
 					break;
 				case '%':
-					printf("%%");
-					lp++;
+					lp += printf("%%");
 					break;
 				default:
-					 printf("%%%c", *format);
-					 lp++;
+					 lp += printf("%%%c", *format);
 					break;
 			}
 		} else 
 		{
-			printf("%c", *format);
-			lp++;
+			lp += printf("%c", *format);
 		}
 		format++;
 	}
