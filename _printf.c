@@ -61,7 +61,8 @@ int _printf(const char *format, ...)
 					lp += printf("%%");
 					break;
 				default:
-					return (-1);
+					lp += printf("%%%c", *format);
+					break;
 			}
 
 			}
