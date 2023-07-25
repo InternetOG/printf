@@ -11,8 +11,10 @@ int _printf(const char *format, ...)
 	int lp = 0;
 	va_list args;
 	va_start(args, format);
-	if (format != NULL)
+	if (format == NULL)
 	{
+		return (0);
+	}
 
 	while (*format)
 	{
@@ -62,7 +64,6 @@ int _printf(const char *format, ...)
 			lp += printf("%c", *format);
 		}
 		format++;
-	}
 	}
 	va_end(args);
 	return (lp);
