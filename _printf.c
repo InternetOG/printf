@@ -10,6 +10,7 @@ int _printf(const char *format, ...)
 {
 	
 	int lp = 0;
+	int i;
 	va_list args;
 	va_start(args, format);
 	if (format == NULL)
@@ -54,8 +55,27 @@ int _printf(const char *format, ...)
 					lp += printf("%p", va_arg(args, void *));
 					break;
 				case 'b':
-					lp += printf("%b", va_arg(args, unsigned int));
-					break;
+					{
+					unsigned int num = va_arg(args, unsigned int);
+					char buffer[32];
+					int index = 0;
+					if (num == 0) {
+					return printf("0");
+					}
+					else 
+					{
+						while (num > 0)
+						{
+							buffer[index++] = num % 2;
+							num /= 2;
+						}
+							for (i = index - 1; i >= 0; i--)
+							{
+								printf("%d", buffer[i]);
+							}
+					}
+						break;
+					}
 				case '%':
 					lp += printf("%%");
 					break;
@@ -63,7 +83,6 @@ int _printf(const char *format, ...)
 					lp += printf("%%%c", *format);
 					break;
 			}
-
 			}
 			else 
 			{
