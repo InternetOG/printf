@@ -13,7 +13,7 @@ int _printf(const char *format, ...)
 	va_list args;
 	if (format == NULL)
 	{
-		return (1);
+		return (-1);
 	}
 	va_start(args, format);
 
@@ -22,6 +22,11 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
+			if (!*format) 
+			{
+
+        			return -1;
+			}
 			switch (*format)
 			{
 				case 'c':
@@ -56,14 +61,14 @@ int _printf(const char *format, ...)
 					lp += printf("%%");
 					break;
 				default:
-					 lp += printf("%%%c", *format);
-					break;
+					return (-1);
 			}
-		}
-		else 
-		{
-			lp += printf("%c", *format);
-		}
+
+			}
+			else 
+			{
+				lp += printf("%c", *format);
+			}
 		format++;
 	}
 	va_end(args);
