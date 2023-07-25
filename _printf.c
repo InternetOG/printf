@@ -44,6 +44,9 @@ int _printf(const char *format, ...)
 				case 'p':
 					lp += printf("%p", va_arg(args, void *));
 					break;
+				case 'b':
+					lp += printf("%b", va_arg(args, unsigned int));
+					break;
 				case '%':
 					lp += printf("%%");
 					break;
