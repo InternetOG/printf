@@ -36,8 +36,10 @@ int _printf(const char *format, ...)
 					lp += printf("%o", va_arg(args, unsigned int));
 					break;
 				case 'x':
-				case 'X':
 					lp += printf("%x", va_arg(args, int *));
+					break;
+				case 'X':
+					lp += printf("%X", va_arg(args, int *));
 					break;
 				case 'p':
 					lp += printf("%p", va_arg(args, void *));
